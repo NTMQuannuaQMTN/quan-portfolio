@@ -111,7 +111,7 @@ export default function HomePage() {
         theme={theme}
       />
 
-      <div className="lg:ml-[220px]">
+      <div className="pt-14 lg:pt-0 lg:ml-[220px]">
         <Hero darkMode={darkMode} theme={theme} />
         <About theme={theme} darkMode={darkMode} />
 
@@ -150,18 +150,27 @@ function Navbar({ darkMode, setDarkMode, theme }: any) {
       <nav
         style={{
           background: darkMode
-            ? "rgba(5,5,5,0.75)"
-            : "rgba(246,240,229,0.75)",
+            ? "rgba(5,5,5,0.9)"
+            : "rgba(246,240,229,0.9)",
           borderColor: theme.border,
         }}
-        className="fixed left-0 top-0 z-50 flex h-screen w-[220px] flex-col justify-between border-r px-8 py-10 backdrop-blur-xl max-lg:h-auto max-lg:w-full max-lg:flex-row max-lg:items-center max-lg:border-b max-lg:border-r-0"
+        className="
+          fixed top-0 left-0 z-50
+          w-full border-b backdrop-blur-xl
+          px-5 py-4
+          flex items-center justify-between
+          lg:h-screen lg:w-[220px]
+          lg:flex-col lg:justify-between
+          lg:border-r lg:border-b-0
+          lg:px-8 lg:py-10
+        "
       >
-        <div>
-          <h1 className="text-2xl font-black">
+        <div className="flex items-center gap-8 lg:block">
+          <h1 className="text-xl lg:text-2xl font-black">
             qnrj
           </h1>
 
-          <div className="mt-16 flex flex-col gap-3 max-lg:hidden">
+          <div className="hidden lg:flex mt-16 flex-col gap-3">
             {navItems.map((item) => (
               <a
                 key={item}
@@ -169,9 +178,12 @@ function Navbar({ darkMode, setDarkMode, theme }: any) {
                 className="group relative w-fit text-sm uppercase tracking-[0.3em] transition duration-300 hover:translate-x-3"
                 style={{ color: theme.muted }}
               >
-                <span className={`
-                  group-hover:font-bold ${darkMode ? "group-hover:text-[#FF3B30]" : "group-hover:text-[#D6A441]"}
-                `}>
+                <span
+                  className={`group-hover:font-bold ${darkMode
+                    ? "group-hover:text-[#FF3B30]"
+                    : "group-hover:text-[#D6A441]"
+                    }`}
+                >
                   {item}
                 </span>
               </a>
@@ -179,33 +191,48 @@ function Navbar({ darkMode, setDarkMode, theme }: any) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-6 max-lg:flex-row max-lg:items-center">
+        <div className="flex items-center gap-5 lg:flex-col lg:items-start">
           <button
             onClick={handleThemeSwitch}
-            className="w-fit hover:font-bold text-sm uppercase tracking-[0.3em]"
+            className="text-sm uppercase tracking-[0.3em]"
             style={{ color: theme.accent }}
           >
             {darkMode ? "Life" : "Career"}
           </button>
 
           <div
-            className="flex flex-col gap-2 text-sm max-lg:flex-row"
+            className="hidden lg:flex flex-col gap-2 text-sm"
             style={{ color: theme.muted }}
           >
-            <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/qandrj">Facebook</a>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/nguyen-truong-manh-quan/">LinkedIn</a>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/qnrj_arsaldx/">Instagram</a>
+            <a href="https://www.facebook.com/qandrj" target="_blank">
+              Facebook
+            </a>
+            <a href="https://www.linkedin.com/in/nguyen-truong-manh-quan/" target="_blank">
+              LinkedIn
+            </a>
+            <a href="https://www.instagram.com/qnrj_arsaldx/" target="_blank">
+              Instagram
+            </a>
           </div>
         </div>
       </nav>
 
-      <div className="fixed bottom-6 right-6 z-50 hidden max-lg:block">
-        <div className="flex gap-4 rounded-full border border-white/10 bg-black/20 px-5 py-3 backdrop-blur-xl">
-          {navItems.slice(0, 4).map((item) => (
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 lg:hidden">
+        <div
+          style={{
+            background: darkMode
+              ? "rgba(10,10,10,0.85)"
+              : "rgba(255,255,255,0.85)",
+            borderColor: theme.border,
+          }}
+          className="flex max-w-[90vw] gap-4 overflow-x-auto rounded-full border px-5 py-3 backdrop-blur-xl"
+        >
+          {navItems.map((item) => (
             <a
               key={item}
               href={`#${item}`}
-              className="text-xs uppercase tracking-[0.2em] text-white/60"
+              className="whitespace-nowrap text-[11px] uppercase tracking-[0.2em]"
+              style={{ color: theme.muted }}
             >
               {item}
             </a>
@@ -218,7 +245,7 @@ function Navbar({ darkMode, setDarkMode, theme }: any) {
 
 function Hero({ darkMode, theme }: any) {
   return (
-    <section className="relative flex min-h-screen items-center overflow-hidden px-8 py-8 lg:px-20">
+    <section className="relative flex min-h-screen items-center overflow-hidden px-6 py-12 lg:px-20">
       <AnimatePresence>
         <motion.div
           key={darkMode ? "dark" : "light"}
@@ -226,24 +253,30 @@ function Hero({ darkMode, theme }: any) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.8 }}
-          className="grid w-full grid-cols-1 items-center gap-20 lg:grid-cols-2"
+          className="grid w-full grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-20"
         >
           <div>
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               style={{ color: theme.accent }}
-              className="mb-6 text-xs uppercase tracking-[0.5em]"
+              className="mb-6 text-[10px] md:text-xs uppercase tracking-[0.5em]"
             >
               Software Engineer • Builder • Storyteller
             </motion.p>
 
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-[4rem] mt-8 font-black leading-[1] tracking-[-0.02em] md:text-[4.5rem] lg:text-[5rem] flex flex-col gap-2"
+              className="
+                mt-8
+                flex flex-col gap-1
+                text-[2.8rem]
+                sm:text-[3.5rem]
+                md:text-[4.5rem]
+                lg:text-[5rem]
+                font-black
+                leading-[0.95]
+                tracking-[-0.03em]
+              "
             >
               NGUYỄN
               <br />
@@ -253,9 +286,6 @@ function Hero({ darkMode, theme }: any) {
             </motion.h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
               className="mt-6 max-w-xl text-base leading-relaxed"
               style={{ color: theme.muted }}
             >
@@ -265,12 +295,7 @@ function Hero({ darkMode, theme }: any) {
             </motion.p>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="relative mx-auto"
-          >
+          <div className="mx-auto">
             <div
               style={{
                 background: darkMode
@@ -282,15 +307,28 @@ function Hero({ darkMode, theme }: any) {
 
             <div
               style={{ borderColor: theme.border }}
-              className="relative aspect-[4/5] w-[320px] overflow-hidden border md:w-[450px]"
+              className="
+                relative
+                aspect-[4/5]
+                w-[260px]
+                sm:w-[320px]
+                md:w-[400px]
+                lg:w-[450px]
+                overflow-hidden
+                border
+              "
             >
               <img
-                src={darkMode ? "/images/profile-dark.png" : "/images/profile-light.png"}
+                src={
+                  darkMode
+                    ? "/images/profile-dark.png"
+                    : "/images/profile-light.png"
+                }
                 alt="profile"
-                className={`h-full w-full object-cover transition-opacity duration-500`}
+                className="h-full w-full object-cover"
               />
             </div>
-          </motion.div>
+          </div>
         </motion.div>
       </AnimatePresence>
     </section>
@@ -806,37 +844,26 @@ function Education({ theme }: any) {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-0 lg:grid-cols-[140px_1fr]">
+        <div className="mt-12">
           <div className="relative">
             <div className="absolute left-5 top-0 h-full w-px bg-white/10" />
-
-            <div className="space-y-62 text-xs uppercase tracking-[0.35em]"
-              style={{ color: theme.accent }}>
-              {timelineYears.map((year, index) => (
-                <div key={year} className="relative pl-8">
-                  {year}
-                  <span
-                    className="absolute left-0 top-1 h-3 w-3 rounded-full"
-                    style={{ backgroundColor: accentColor }}
-                  />
-                </div>
-              ))}
-            </div>
           </div>
 
-          <div className="space-y-10">
+          <div className="space-y-6 lg:space-y-10">
             {schools.map((school) => (
               <div
                 key={school.name}
-                className="group relative pl-4 h-60 ml-auto max-w-5xl overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1"
+                className="group relative overflow-hidden rounded-[2rem] border transition
+                duration-300 hover:-translate-y-1 p-5 md:p-6 lg:h-60"
                 style={{
                   borderColor: theme.border,
                   background: cardGradient,
                 }}
               >
-                <div className="flex gap-8 p-6 items-center h-full">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-center h-full">
                   {/* LEFT: Logo */}
-                  <div className="relative h-48 w-48 overflow-hidden bg-white/5 flex items-center justify-center my-auto">
+                  <div className=" relative h-24 w-24 md:h-32 md:w-32
+                  lg:h-48 lg:w-48 overflow-hidden flex-shrink-0 my-auto">
                     <img
                       src={school.logo}
                       alt={`${school.name} logo`}
@@ -852,7 +879,7 @@ function Education({ theme }: any) {
                         style={{ color: secondaryTextColor }}>
                         {school.year}
                       </p>
-                      <h3 className="text-2xl font-semibold leading-tight md:text-3xl">
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">
                         {school.name}
                       </h3>
                     </div>
@@ -938,26 +965,38 @@ function Blog({ darkMode, theme, blogs }: any) {
         </motion.div>
 
         {/* BLOG POSTS */}
-        <div className="mt-20 space-y-12">
+        <div className="mt-12 md:mt-20 space-y-8 md:space-y-12">
           {blogs?.map((post: any, index: number) => (
             <motion.a
               key={index}
               href={post.link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="group block border-b pb-12 transition-all"
+              className="group block border-b pb-8 md:pb-12"
               style={{
                 borderColor: theme.border,
               }}
             >
-              <div className="mb-4 flex items-center gap-4 text-sm uppercase tracking-[0.3em]">
+              <div
+                className="
+          mb-3
+          md:mb-4
+          flex
+          items-center
+          gap-3
+          md:gap-4
+          text-[10px]
+          md:text-sm
+          uppercase
+          tracking-[0.25em]
+        "
+              >
                 <span
-                  className="font-semibold"
                   style={{ color: theme.accent }}
+                  className="font-semibold"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -968,29 +1007,28 @@ function Blog({ darkMode, theme, blogs }: any) {
               </div>
 
               <h3
-                className={`max-w-5xl text-3xl md:text-5xl font-semibold tracking-[-0.05em] transition-colors ${darkMode
-                  ? "text-white group-hover:text-red-400"
-                  : "text-black group-hover:text-[#D6A441]"
-                  }`}
+                className={`
+          text-2xl
+          sm:text-3xl
+          md:text-5xl
+          font-semibold
+          tracking-[-0.05em]
+          transition-colors
+          ${darkMode
+                    ? "text-white group-hover:text-red-400"
+                    : "text-black group-hover:text-[#D6A441]"
+                  }
+        `}
               >
                 {post.title}
               </h3>
 
-              {post.description && (
-                <p
-                  className="mt-6 max-w-3xl text-lg leading-relaxed"
-                  style={{ color: theme.muted }}
-                >
-                  {post.description}
-                </p>
-              )}
-
-              <div
-                className="mt-8 text-sm uppercase tracking-[0.25em]"
-                style={{ color: theme.accent }}
+              <p
+                className="mt-4 md:mt-6 text-base md:text-lg leading-relaxed max-w-3xl"
+                style={{ color: theme.muted }}
               >
-                Read article →
-              </div>
+                Open article →
+              </p>
             </motion.a>
           ))}
         </div>
