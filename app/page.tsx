@@ -73,7 +73,7 @@ export default function HomePage() {
       .from("blogs")
       .select("title, image, link, published")
       .order("published", { ascending: false });
-    
+
     console.log("Fetching blogs...", data);
     if (data) {
       setBlogs(data);
@@ -92,6 +92,7 @@ export default function HomePage() {
       border: darkMode
         ? "rgba(255,255,255,0.08)"
         : "rgba(0,0,0,0.08)",
+      mode: darkMode ? "dark" : "light",
     }),
     [darkMode]
   );
@@ -761,6 +762,18 @@ function Education({ theme }: any) {
     },
   ];
 
+  const isDark = theme.mode === "dark"; // or whatever flag you use
+
+  const accentColor = isDark ? "#C62828" : "#D6A441";
+  const cardGradient = isDark
+    ? "linear-gradient(135deg, #B71C1C 0%, #111111 100%)"
+    : "linear-gradient(135deg, #D6A441 0%, #FFFFFF 100%)";
+
+  const cardTextColor = isDark ? "white" : "black";
+  const secondaryTextColor = isDark
+    ? "rgba(255,255,255,0.75)"
+    : "rgba(0,0,0,0.7)";
+
   const timelineYears = ["2019", "2023", "2026", "2030"];
 
   return (
@@ -802,7 +815,10 @@ function Education({ theme }: any) {
               {timelineYears.map((year, index) => (
                 <div key={year} className="relative pl-8">
                   {year}
-                  <span className="absolute left-0 top-1 h-3 w-3 rounded-full bg-[#D6A441]/80" />
+                  <span
+                    className="absolute left-0 top-1 h-3 w-3 rounded-full"
+                    style={{ backgroundColor: accentColor }}
+                  />
                 </div>
               ))}
             </div>
@@ -815,7 +831,7 @@ function Education({ theme }: any) {
                 className="group relative pl-4 h-60 ml-auto max-w-5xl overflow-hidden rounded-[2rem] border transition duration-300 hover:-translate-y-1"
                 style={{
                   borderColor: theme.border,
-                  background: "linear-gradient(135deg, #D6A441 0%, #FFFFFF 100%)",
+                  background: cardGradient,
                 }}
               >
                 <div className="flex gap-8 p-6 items-center h-full">
@@ -829,9 +845,11 @@ function Education({ theme }: any) {
                   </div>
 
                   {/* RIGHT: Content */}
-                  <div className="relative z-10 flex flex-1 flex-col justify-between text-black">
+                  <div className="relative z-10 flex flex-1 flex-col justify-between"
+                    style={{ color: cardTextColor }}>
                     <div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-black/70">
+                      <p className="text-xs uppercase tracking-[0.3em]"
+                        style={{ color: secondaryTextColor }}>
                         {school.year}
                       </p>
                       <h3 className="text-2xl font-semibold leading-tight md:text-3xl">
@@ -840,10 +858,12 @@ function Education({ theme }: any) {
                     </div>
 
                     <div>
-                      <p className="mt-2 text-sm font-medium uppercase tracking-[0.2em] text-black">
+                      <p className="mt-2 text-sm font-medium uppercase tracking-[0.2em]"
+                        style={{ color: cardTextColor }}>
                         Achievements:
                       </p>
-                      <ul className="text-sm leading-relaxed text-black/80">
+                      <ul className="text-sm leading-relaxed"
+                        style={{ color: secondaryTextColor }}>
                         {school.achievements.map((achievement, idx) => (
                           <li key={idx} className="flex items-start gap-3">
                             <span className="text-black/60">+</span>
@@ -905,84 +925,71 @@ function Blog({ darkMode, theme, blogs }: any) {
           </p>
 
           <h2 className="max-w-5xl text-4xl font-semibold leading-[1.1] tracking-[-0.06em] md:text-7xl">
-            {darkMode
-              ? "Technology should feel human, not distant."
-              : "The most meaningful things in life are often invisible at first."}
+            Ideas, lessons, and stories worth remembering.
           </h2>
 
           <p
             style={{ color: theme.muted }}
             className="mt-10 max-w-2xl text-lg leading-relaxed"
           >
-            A cinematic journal about growth, creativity, engineering,
-            ambition, memories, and moments worth keeping.
+            Writing about technology, education, building products,
+            leadership, and the experiences that shaped who I am.
           </p>
         </motion.div>
 
         {/* BLOG POSTS */}
-        <div className="flex gap-4 overflow-x-auto rounded-[2rem] border border-white/10 bg-[rgba(255,255,255,0.04)] p-4 pb-6">
+        <div className="mt-20 space-y-12">
           {blogs?.map((post: any, index: number) => (
             <motion.a
               key={index}
               href={post.link}
               target="_blank"
               rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 120 }}
+              initial={{ opacity: 0, y: 60 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.9,
-                ease: "easeOut",
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="group block border-b pb-12 transition-all"
+              style={{
+                borderColor: theme.border,
               }}
-              viewport={{ once: true, amount: 0.2 }}
-              className="group flex-none w-[32%] min-w-[320px] overflow-hidden rounded-[2rem] border border-white/20 bg-[rgba(255,255,255,0.03)] transition duration-300 hover:-translate-y-1"
             >
-              <div className="overflow-hidden rounded-t-[2rem]">
-                {post.image ? (
-                  <motion.img
-                    src={post.image}
-                    alt={post.title}
-                    whileHover={{ scale: 1.03 }}
-                    transition={{ duration: 0.8 }}
-                    className="h-[220px] w-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className="flex h-[220px] w-full items-center justify-center text-2xl font-medium"
-                    style={{
-                      background: darkMode
-                        ? "#111"
-                        : "#f5f1e8",
-                      color: theme.muted,
-                    }}
-                  >
-                    No image
-                  </div>
-                )}
+              <div className="mb-4 flex items-center gap-4 text-sm uppercase tracking-[0.3em]">
+                <span
+                  className="font-semibold"
+                  style={{ color: theme.accent }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <span style={{ color: theme.muted }}>
+                  {new Date(post.published).toLocaleDateString()}
+                </span>
               </div>
 
-              <div className="p-4">
-                <div className="mb-4 flex items-center justify-between gap-4 text-sm uppercase tracking-[0.3em]">
-                  <span
-                    style={{ color: theme.accent }}
-                    className="font-semibold"
-                  >
-                    Journal / {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-black/60">
-                    {new Date(post.published).toLocaleDateString()}
-                  </span>
-                </div>
+              <h3
+                className={`max-w-5xl text-3xl md:text-5xl font-semibold tracking-[-0.05em] transition-colors ${darkMode
+                  ? "text-white group-hover:text-red-400"
+                  : "text-black group-hover:text-[#D6A441]"
+                  }`}
+              >
+                {post.title}
+              </h3>
 
-                <h3 className="text-4xl font-semibold leading-[1.05] tracking-[-0.05em] text-black">
-                  {post.title}
-                </h3>
-
+              {post.description && (
                 <p
+                  className="mt-6 max-w-3xl text-lg leading-relaxed"
                   style={{ color: theme.muted }}
-                  className="mt-6 text-lg leading-relaxed"
                 >
-                  Open post →
+                  {post.description}
                 </p>
+              )}
+
+              <div
+                className="mt-8 text-sm uppercase tracking-[0.25em]"
+                style={{ color: theme.accent }}
+              >
+                Read article →
               </div>
             </motion.a>
           ))}
