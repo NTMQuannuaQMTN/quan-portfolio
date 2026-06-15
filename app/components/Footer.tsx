@@ -27,21 +27,21 @@ export default function Footer() {
 
                 <div className="mt-10 flex flex-wrap gap-6">
                     <a
-                        href="https://linkedin.com"
+                        href="https://www.linkedin.com/in/nguyen-truong-manh-quan/"
                         className="text-zinc-400 hover:text-red-500"
                     >
                         LinkedIn
                     </a>
 
                     <a
-                        href="https://github.com"
+                        href="https://github.com/NTMQuannuaQMTN"
                         className="text-zinc-400 hover:text-red-500"
                     >
                         GitHub
                     </a>
 
                     <a
-                        href="mailto:your@email.com"
+                        href="nguyentruongmanhquan@email.com"
                         className="text-zinc-400 hover:text-red-500"
                     >
                         Email

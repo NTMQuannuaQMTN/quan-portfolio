@@ -77,7 +77,7 @@ export default function Hero() {
             className="relative"
           >
             <img
-              src="/images/profile.png"
+              src="/images/profile-dark.png"
               alt="Quan"
               className="
                 h-[260px]
