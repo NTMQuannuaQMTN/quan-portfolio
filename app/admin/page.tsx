@@ -141,8 +141,8 @@ export default function AdminPage() {
                 .from("blogs")
                 .update({
                     title,
-                    image,
                     link,
+                    published
                 })
                 .eq("id", editingId);
 
@@ -153,7 +153,6 @@ export default function AdminPage() {
                 .insert([
                     {
                         title,
-                        image,
                         link,
                         published,
                     },
