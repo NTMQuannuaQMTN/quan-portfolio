@@ -181,24 +181,26 @@ export const experiences = [
 
 export const projects = [
   {
-    title: "Literature Board Game Platform",
+    title: "Vũ Đại Dạ Huyết",
     category: "Education / Interactive Experience",
+    summary:
+      "Built a digital platform supporting an interactive board game that turns Vietnamese novels into a playable, social learning experience.",
     problem:
-      "Vietnamese literature classics like Chí Phèo and Lão Hạc are hard for students to engage with through text alone.",
+      "Vietnamese literary classics are hard for students to engage with through text alone.",
     solution:
       "Built a digital platform supporting an interactive board game that turns these stories into a playable, social learning experience.",
     impact:
       "Used to manage gameplay, players, and educational interactive experiences in classroom settings.",
     tech: ["React", "JavaScript", "CSS"],
-    image: "/images/project-vddh.JPG",
-    imageWidth: 612,
-    imageHeight: 294,
+    image: "/images/project-vddh-cover.png",
     demoHref: "https://vu-dai-da-huyet-test2.vercel.app/",
     githubHref: null,
   },
   {
-    title: "Accessibility Innovation Project",
+    title: "EZ-Komu",
     category: "Accessibility / Innovation",
+    summary:
+      "Designed and built a technology-driven communication tool focused on making everyday interaction more accessible for people with muteness and deafness.",
     problem:
       "People with muteness and deafness often face barriers to fast, natural communication.",
     solution:
@@ -207,25 +209,40 @@ export const projects = [
       "Reached Top 15 nationally in a countrywide innovation competition among 100+ teams.",
     tech: ["JavaScript", "HTML/CSS", "Product Design"],
     image: "/images/project-ezkomu.png",
-    imageWidth: 384,
-    imageHeight: 287,
     demoHref: "https://ntmquannuaqmtn.github.io/Quan-Quang-Phuoc-8A13/",
     githubHref: null,
   },
   {
-    title: "The Noders Community",
-    category: "Leadership / Technology Community",
+    title: "Math Olympiad & AI Training Program",
+    category: "AI Training Data / Research Collaboration",
+    summary:
+      "Contributed curated Math Olympiad problem-solving data to a collaborative program organized by xAI and VNUHCM High School for the Gifted.",
     problem:
-      "Students interested in AI and technology lacked a hands-on, project-driven community to learn from.",
+      "Advanced language models need large volumes of rigorously verified, competition-level math reasoning data to improve — a resource that is scarce and expensive to produce well.",
     solution:
-      "Led technical direction for the community through workshops, projects, and collaborative learning initiatives.",
+      "Curated and provided datasets derived from Math Olympiad problems and solutions for a collaborative program organized by xAI and VNUHCM High School for the Gifted, ensuring accuracy, clarity, and variety to improve AI learning quality and coverage of mathematical concepts.",
     impact:
-      "Built a growing student technology community centered around engineering and innovation.",
-    tech: ["Leadership", "Curriculum Design", "AI"],
-    image: "/images/project-kns.JPG",
-    imageWidth: 1080,
-    imageHeight: 1080,
-    demoHref: "https://www.facebook.com/clbkynangso",
+      "Data potentially contributed to training Grok and other advanced language models.",
+    tech: ["Mathematical Reasoning", "Dataset Curation", "AI Training Data"],
+    image: "/images/project-grok.png",
+    imageFit: "contain" as const,
+    demoHref: null,
+    githubHref: null,
+  },
+  {
+    title: "HCMC High School Platform",
+    category: "Education / Data-Driven Web App",
+    summary:
+      "Developed a website that helps ninth-grade students find their most suitable high school ahead of the high school entrance exam.",
+    problem:
+      "Ninth-grade students in Ho Chi Minh City struggle to know which public high schools they realistically have a chance at based on their entrance exam score.",
+    solution:
+      "Built a platform where students enter their grade 9 entrance exam score and instantly see a ranked list of suitable public high schools, along with estimated admission probability and distance from home.",
+    impact:
+      "Gives incoming high schoolers and their families a clearer, data-driven way to choose the right school instead of guessing.",
+    tech: ["Next.js", "TypeScript", "Data Analysis"],
+    image: "/images/project-hcmc-platform.png",
+    demoHref: "https://hcmc-high-school-platform.vercel.app/",
     githubHref: null,
   },
 ];
@@ -270,8 +287,6 @@ export const education = [
     degree: "B.Comp, Computer Science",
     detail: "Coursework: Data Structures & Algorithms, Systems Programming, AI Foundations.",
     logo: "/images/logo-nus.png",
-    logoWidth: 744,
-    logoHeight: 769,
   },
   {
     period: "2023 — 2026",
@@ -279,8 +294,6 @@ export const education = [
     degree: "Mathematics Specialized Program",
     detail: "Advanced mathematics and problem-solving track.",
     logo: "/images/logo-ptnk.png",
-    logoWidth: 224,
-    logoHeight: 224,
   },
   {
     period: "2019 — 2023",
@@ -288,7 +301,5 @@ export const education = [
     degree: "Secondary Education",
     detail: "Started programming and competed in first innovation competitions.",
     logo: "/images/logo-tdn.png",
-    logoWidth: 1214,
-    logoHeight: 800,
   },
 ];

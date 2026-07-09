@@ -25,18 +25,30 @@ function ProjectCard({
       className="grid gap-10 border-t border-white/10 py-16 lg:grid-cols-2 lg:gap-16"
     >
       <div
-        className={`overflow-hidden rounded-[2rem] border border-white/10 ${
+        className={`self-start overflow-hidden rounded-[2rem] border border-white/10 ${
           reversed ? "lg:order-2" : ""
         }`}
       >
         <div className="relative aspect-[4/3] w-full">
-          <Image
-            src={project.image}
-            alt={project.title}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover transition-transform duration-700 hover:scale-105"
-          />
+          {project.image ? (
+            <Image
+              src={project.image}
+              alt={project.title}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className={`transition-transform duration-700 hover:scale-105 ${
+                "imageFit" in project && project.imageFit === "contain"
+                  ? "object-contain bg-white p-10"
+                  : "object-cover"
+              }`}
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-[#B3001B]/20 to-black">
+              <p className="px-8 text-center text-xs uppercase tracking-[0.3em] text-zinc-500">
+                {project.category}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -50,7 +62,7 @@ function ProjectCard({
         </h3>
 
         <p className="mt-6 max-w-xl leading-relaxed text-zinc-400">
-          {project.solution}
+          {project.summary}
         </p>
 
         <div className="mt-6 flex flex-wrap gap-3">

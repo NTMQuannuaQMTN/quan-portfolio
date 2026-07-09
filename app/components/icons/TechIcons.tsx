@@ -96,6 +96,11 @@ const icons: Record<string, (props: IconProps) => React.ReactElement> = {
       <path d="M12 4l9 16H3z" />
     </Glyph>
   ),
+  cloudflare: (props) => (
+    <Glyph {...props}>
+      <path d="M4 17c-1.5 0-2.5-1.2-2.5-2.5S2.5 12 4 12c.2-2.2 2-4 4.3-4 1.8 0 3.3 1 4 2.5.4-.2.9-.3 1.4-.3 1.7 0 3 1.3 3 3v.1c1.3.2 2.3 1.3 2.3 2.7 0 1.5-1.2 2-2.7 2z" />
+    </Glyph>
+  ),
   docker: (props) => (
     <Glyph {...props}>
       <rect x="3" y="11" width="4" height="4" />

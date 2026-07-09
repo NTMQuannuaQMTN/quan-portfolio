@@ -45,7 +45,7 @@ export default function Hero() {
         >
           <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#B3001B]/25 blur-[90px]" />
           <Image
-            src="/images/profile-dark.png"
+            src="/images/profile-cutout.png"
             alt={profile.name}
             width={750}
             height={922}
