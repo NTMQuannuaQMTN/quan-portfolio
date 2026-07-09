@@ -1,57 +1,48 @@
+import { profile } from "../data/content";
+
 export default function Footer() {
-    return (
-        <footer
-            className="
-          border-t
-          border-white/10
-          px-6
-          py-16
-          lg:px-10
-        "
-        >
-            <div className="mx-auto max-w-7xl">
-                <h2
-                    className="
-              text-3xl
-              font-bold
-              text-white
-              md:text-5xl
-            "
-                >
-                    Nguyễn Trương Mạnh Quân
-                </h2>
+  const year = new Date().getFullYear();
 
-                <p className="mt-4 text-zinc-400">
-                    Computer Science Student @ NUS
-                </p>
+  return (
+    <footer className="border-t border-white/10 px-6 py-16 lg:px-10">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="text-3xl font-bold text-white md:text-5xl">
+          Let&apos;s build something meaningful.
+        </h2>
 
-                <div className="mt-10 flex flex-wrap gap-6">
-                    <a
-                        href="https://www.linkedin.com/in/nguyen-truong-manh-quan/"
-                        className="text-zinc-400 hover:text-red-500"
-                    >
-                        LinkedIn
-                    </a>
+        <p className="mt-4 text-zinc-400">
+          {profile.name} — Computer Science Student, NUS
+        </p>
 
-                    <a
-                        href="https://github.com/NTMQuannuaQMTN"
-                        className="text-zinc-400 hover:text-red-500"
-                    >
-                        GitHub
-                    </a>
+        <div className="mt-10 flex flex-wrap gap-6">
+          <a
+            href={profile.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 transition-colors hover:text-[color:var(--color-crimson-bright)]"
+          >
+            LinkedIn
+          </a>
+          <a
+            href={profile.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-zinc-400 transition-colors hover:text-[color:var(--color-crimson-bright)]"
+          >
+            GitHub
+          </a>
+          <a
+            href={`mailto:${profile.email}`}
+            className="text-zinc-400 transition-colors hover:text-[color:var(--color-crimson-bright)]"
+          >
+            Email
+          </a>
+        </div>
 
-                    <a
-                        href="nguyentruongmanhquan@email.com"
-                        className="text-zinc-400 hover:text-red-500"
-                    >
-                        Email
-                    </a>
-                </div>
-
-                <div className="mt-12 text-sm text-zinc-600">
-                    © 2026 Nguyễn Trương Mạnh Quân
-                </div>
-            </div>
-        </footer>
-    );
+        <div className="mt-12 text-sm text-zinc-600">
+          © {year} {profile.name}
+        </div>
+      </div>
+    </footer>
+  );
 }

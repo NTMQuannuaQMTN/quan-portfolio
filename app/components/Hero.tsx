@@ -1,243 +1,122 @@
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { profile } from "../data/content";
+import Particles from "./effects/Particles";
+import GridBackground from "./effects/GridBackground";
+import MagneticButton from "./effects/MagneticButton";
 
 export default function Hero() {
-    return (
-      <section
-        className="
-          relative
-          flex
-          min-h-screen
-          items-center
-          justify-center
-          overflow-hidden
-          px-6
-        "
+  return (
+    <section
+      id="hero"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6"
+    >
+      <div className="absolute inset-0 bg-[#050505]" />
+
+      <GridBackground />
+      <Particles count={45} />
+
+      <div className="absolute left-1/2 top-1/2 h-[700px] w-[700px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#B3001B]/20 blur-[180px]" />
+      <div className="absolute left-1/2 top-[45%] h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-[#B3001B]/10 blur-[120px]" />
+
+      {/* Huge background typography */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 flex select-none flex-col items-center justify-center gap-0 mix-blend-overlay"
       >
-        {/* Background */}
-  
-        <div className="absolute inset-0 bg-[#050505]" />
-  
-        {/* Main Red Glow */}
-  
-        <div
-          className="
-            absolute
-            left-1/2
-            top-1/2
-            h-[700px]
-            w-[700px]
-            -translate-x-1/2
-            -translate-y-1/2
-            rounded-full
-            bg-red-700/20
-            blur-[180px]
-          "
-        />
-  
-        {/* Secondary Glow */}
-  
-        <div
-          className="
-            absolute
-            left-1/2
-            top-[45%]
-            h-[400px]
-            w-[400px]
-            -translate-x-1/2
-            rounded-full
-            bg-red-500/10
-            blur-[120px]
-          "
-        />
-  
-        <div
-          className="
-            relative
-            z-10
-            mx-auto
-            flex
-            max-w-5xl
-            flex-col
-            items-center
-            text-center
-          "
+        {profile.nameLines.map((line, index) => (
+          <span
+            key={line + index}
+            className="whitespace-nowrap text-[16vw] font-black leading-[0.85] tracking-tighter text-white/40 md:text-[13vw]"
+          >
+            {line}
+          </span>
+        ))}
+      </div>
+
+      <div className="relative z-10 mx-auto flex max-w-5xl flex-col items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="relative"
         >
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.9,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              duration: 0.8,
-            }}
-            className="relative"
+          <div className="absolute left-1/2 top-1/2 h-[85%] w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#B3001B]/25 blur-[90px]" />
+          <Image
+            src="/images/profile-dark.png"
+            alt={profile.name}
+            width={750}
+            height={922}
+            priority
+            className="relative h-[280px] w-auto drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)] md:h-[400px] lg:h-[480px]"
+          />
+        </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="-mt-6 text-[10px] uppercase tracking-[0.5em] text-[color:var(--color-crimson-bright)] md:text-xs"
+        >
+          {profile.tagline}
+        </motion.p>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-white md:text-5xl"
+        >
+          {profile.role}
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400 md:text-lg"
+        >
+          {profile.heroSubline}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="mt-4 flex flex-col gap-4 sm:flex-row"
+        >
+          <MagneticButton
+            href="#projects"
+            className="rounded-full bg-[#B3001B] px-6 py-3 font-medium text-white transition-colors hover:bg-[#d4041f]"
           >
-            <img
-              src="/images/profile-dark.png"
-              alt="Quan"
-              className="
-                h-[260px]
-                w-[260px]
-                rounded-full
-                object-cover
-                border
-                border-white/10
-                shadow-2xl
-                md:h-[340px]
-                md:w-[340px]
-                lg:h-[420px]
-                lg:w-[420px]
-              "
-            />
-  
-            <div
-              className="
-                absolute
-                inset-0
-                rounded-full
-                ring-2
-                ring-red-500/20
-              "
-            />
-          </motion.div>
-  
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.3,
-            }}
-            className="
-              mt-10
-              text-[10px]
-              uppercase
-              tracking-[0.5em]
-              text-red-500
-              md:text-xs
-            "
+            View Projects
+          </MagneticButton>
+
+          <MagneticButton
+            href="#contact"
+            className="rounded-full border border-white/15 px-6 py-3 font-medium text-white transition-colors hover:border-[#B3001B]/50"
           >
-            Computer Science Student • Builder • Founder
-          </motion.p>
-  
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.4,
-            }}
-            className="
-              mt-6
-              max-w-5xl
-              text-5xl
-              font-black
-              leading-none
-              tracking-[-0.05em]
-              text-white
-              md:text-7xl
-              lg:text-8xl
-            "
-          >
-            NGUYỄN
-            <br />
-            TRƯƠNG MẠNH QUÂN
-          </motion.h1>
-  
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.5,
-            }}
-            className="
-              mt-8
-              max-w-2xl
-              text-base
-              leading-relaxed
-              text-zinc-400
-              md:text-lg
-            "
-          >
-            Building products, communities, and educational
-            technology that create meaningful impact through
-            software and innovation.
-          </motion.p>
-  
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              delay: 0.6,
-            }}
-            className="
-              mt-10
-              flex
-              flex-col
-              gap-4
-              sm:flex-row
-            "
-          >
-            <a
-              href="#projects"
-              className="
-                rounded-full
-                bg-red-700
-                px-8
-                py-4
-                font-medium
-                text-white
-                transition
-                hover:bg-red-600
-              "
-            >
-              View Projects
-            </a>
-  
-            <a
-              href="#blog"
-              className="
-                rounded-full
-                border
-                border-white/10
-                px-8
-                py-4
-                font-medium
-                text-white
-                transition
-                hover:border-red-500/40
-              "
-            >
-              Read Blog
-            </a>
-          </motion.div>
-        </div>
-      </section>
-    );
-  }
+            Contact Me
+          </MagneticButton>
+        </motion.div>
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          className="flex h-9 w-6 items-start justify-center rounded-full border border-white/20 p-1.5"
+        >
+          <div className="h-1.5 w-1 rounded-full bg-white/60" />
+        </motion.div>
+      </motion.div>
+    </section>
+  );
+}

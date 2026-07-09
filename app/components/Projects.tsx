@@ -1,148 +1,162 @@
-export default function Projects() {
-    const featuredProject = {
-      title: "Doorians Lab",
-      subtitle: "Software Studio",
-      description:
-        "Building software products for educational organizations, startups, and student communities. Acting as technical partner, product builder, and engineering lead.",
-    };
-  
-    const projects = [
-      {
-        title: "SAT Champions",
-        category: "Doorians Lab Client",
-        description:
-          "AI-powered SAT learning platform with classes, assignments, analytics, and educational tools.",
-        image: "/images/project-satchampions.png",
-      },
-  
-      {
-        title: "PTNK Mash",
-        category: "Doorians Lab Client",
-        description:
-          "Digital platform for students and educational initiatives.",
-        image: "/images/project-mash.png",
-      },
-  
-      {
-        title: "Homee",
-        category: "Startup",
-        description:
-          "Social platform built around student communities and groups.",
-        image: "/images/project-homee.png",
-      },
-  
-      {
-        title: "Accessibility Innovation Project",
-        category: "Innovation",
-        description:
-          "Top 15 National Innovation Competition project supporting people with hearing and speech disabilities.",
-        image: "/images/project-accessibility.png",
-      },
-  
-      {
-        title: "Literature Board Game Platform",
-        category: "Education",
-        description:
-          "Interactive educational platform built around a custom literature board game.",
-        image: "/images/project-boardgame.png",
-      },
-    ];
-  
-    return (
-      <section
-        id="projects"
-        className="px-6 py-24 lg:px-10"
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "../data/content";
+
+function ProjectCard({
+  project,
+  index,
+}: {
+  project: (typeof projects)[number];
+  index: number;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  const reversed = index % 2 === 1;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.7 }}
+      className="grid gap-10 border-t border-white/10 py-16 lg:grid-cols-2 lg:gap-16"
+    >
+      <div
+        className={`overflow-hidden rounded-[2rem] border border-white/10 ${
+          reversed ? "lg:order-2" : ""
+        }`}
       >
-        <div className="mx-auto max-w-7xl">
-          <p className="mb-6 text-xs uppercase tracking-[0.4em] text-red-500">
-            Projects
-          </p>
-  
-          <h2 className="max-w-5xl text-4xl font-semibold tracking-[-0.04em] text-white md:text-6xl">
-            Building products that create real impact.
-          </h2>
-  
-          {/* Featured */}
-  
-          <div
-            className="
-              mt-16
-              overflow-hidden
-              rounded-[2rem]
-              border
-              border-red-500/20
-              bg-gradient-to-br
-              from-red-950
-              to-black
-              p-10
-              lg:p-16
-            "
-          >
-            <p className="text-sm uppercase tracking-[0.3em] text-red-400">
-              Featured
-            </p>
-  
-            <h3 className="mt-4 text-5xl font-bold text-white">
-              Doorians Lab
-            </h3>
-  
-            <p className="mt-6 max-w-3xl text-lg leading-relaxed text-zinc-300">
-              {featuredProject.description}
-            </p>
-  
-            <div className="mt-10 flex flex-wrap gap-4">
-              {["SAT Champions", "PTNK Mash", "Future Projects"].map(
-                (item) => (
-                  <div
-                    key={item}
-                    className="
-                      rounded-full
-                      border
-                      border-white/10
-                      px-4
-                      py-2
-                      text-sm
-                      text-zinc-300
-                    "
-                  >
-                    {item}
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-  
-          {/* Other Projects */}
-  
-          <div className="mt-12 grid gap-8 md:grid-cols-2">
-            {projects.map((project) => (
-              <div
-                key={project.title}
-                className="
-                  overflow-hidden
-                  rounded-[2rem]
-                  border
-                  border-white/10
-                  bg-white/[0.02]
-                "
-              >  
-                <div className="p-8">
-                  <p className="text-xs uppercase tracking-[0.25em] text-red-500">
-                    {project.category}
+        <div className="relative aspect-[4/3] w-full">
+          <Image
+            src={project.image}
+            alt={project.title}
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover transition-transform duration-700 hover:scale-105"
+          />
+        </div>
+      </div>
+
+      <div className={`flex flex-col justify-center ${reversed ? "lg:order-1" : ""}`}>
+        <p className="text-xs uppercase tracking-[0.3em] text-[color:var(--color-crimson-bright)]">
+          {project.category}
+        </p>
+
+        <h3 className="mt-4 text-3xl font-semibold text-white md:text-5xl">
+          {project.title}
+        </h3>
+
+        <p className="mt-6 max-w-xl leading-relaxed text-zinc-400">
+          {project.solution}
+        </p>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          {project.tech.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full border border-white/10 px-3 py-1 text-xs uppercase tracking-wider text-zinc-400"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+
+        <AnimatePresence initial={false}>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <div className="mt-8 space-y-5 border-t border-white/10 pt-6">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+                    Problem
                   </p>
-  
-                  <h3 className="mt-3 text-2xl font-semibold text-white">
-                    {project.title}
-                  </h3>
-  
-                  <p className="mt-4 leading-relaxed text-zinc-400">
-                    {project.description}
+                  <p className="mt-2 leading-relaxed text-zinc-400">
+                    {project.problem}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+                    Solution
+                  </p>
+                  <p className="mt-2 leading-relaxed text-zinc-400">
+                    {project.solution}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs uppercase tracking-[0.25em] text-zinc-500">
+                    Impact
+                  </p>
+                  <p className="mt-2 leading-relaxed text-zinc-400">
+                    {project.impact}
                   </p>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="mt-8 flex flex-wrap items-center gap-6">
+          <button
+            type="button"
+            onClick={() => setExpanded((prev) => !prev)}
+            className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-white transition-colors hover:text-[color:var(--color-crimson-bright)]"
+          >
+            {expanded ? "Hide Case Study" : "Case Study"}
+          </button>
+
+          {project.demoHref && (
+            <a
+              href={project.demoHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm uppercase tracking-[0.2em] text-zinc-400 transition-colors hover:text-[color:var(--color-crimson-bright)]"
+            >
+              Live Demo <ArrowUpRight size={14} />
+            </a>
+          )}
+
+          {project.githubHref && (
+            <a
+              href={project.githubHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm uppercase tracking-[0.2em] text-zinc-400 transition-colors hover:text-[color:var(--color-crimson-bright)]"
+            >
+              GitHub <ArrowUpRight size={14} />
+            </a>
+          )}
         </div>
-      </section>
-    );
-  }
+      </div>
+    </motion.div>
+  );
+}
+
+export default function Projects() {
+  return (
+    <section id="projects" className="relative px-6 py-24 lg:px-10">
+      <div className="mx-auto max-w-7xl">
+        <p className="mb-6 text-xs uppercase tracking-[0.4em] text-[color:var(--color-crimson-bright)]">
+          Projects
+        </p>
+
+        <h2 className="max-w-5xl text-4xl font-semibold tracking-tight text-white md:text-6xl">
+          Building products that create real impact.
+        </h2>
+
+        <div className="mt-4">
+          {projects.map((project, index) => (
+            <ProjectCard key={project.title} project={project} index={index} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
