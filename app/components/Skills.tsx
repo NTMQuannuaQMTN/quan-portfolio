@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { skills } from "../data/content";
@@ -54,19 +55,32 @@ export default function Skills() {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.35, ease: "easeInOut" }}
-                      className="overflow-hidden"
+                      className="overflow-hidden -mt-4"
                     >
-                      <div className="flex flex-wrap gap-4 pb-8 pt-1">
+                      <div className="flex flex-wrap gap-5 pb-8 pt-12 px-4">
                         {group.skills.map((skill) => (
-                          <div
-                            key={skill.name}
-                            className="flex items-center gap-3 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm text-zinc-300 transition-colors hover:-translate-y-1 hover:border-[#B3001B]/40"
-                          >
-                            <TechIcon
-                              name={skill.icon}
-                              className="h-4 w-4 text-[color:var(--color-crimson-bright)]"
-                            />
-                            {skill.name}
+                          <div key={skill.name} className="group relative">
+                            <span className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-white px-2.5 py-1 text-xs font-medium text-black opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100">
+                              {skill.name}
+                            </span>
+
+                            <div className="relative h-16 w-16 rounded-2xl bg-white p-3 shadow-md transition-transform duration-200 group-hover:-translate-y-1 group-hover:shadow-[0_8px_24px_rgba(179,0,27,0.35)]">
+                              {skill.logo ? (
+                                <Image
+                                  src={skill.logo}
+                                  alt={skill.name}
+                                  fill
+                                  unoptimized
+                                  sizes="64px"
+                                  className="object-contain p-1"
+                                />
+                              ) : (
+                                <TechIcon
+                                  name={skill.icon}
+                                  className="h-full w-full text-black"
+                                />
+                              )}
+                            </div>
                           </div>
                         ))}
                       </div>

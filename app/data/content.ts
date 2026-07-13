@@ -67,63 +67,71 @@ export const journey = [
   },
 ];
 
+const DEVICON = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons";
+
+export type Skill = {
+  name: string;
+  logo: string | null;
+  icon: string;
+};
+
 export type SkillCategory = {
   category: string;
-  skills: { name: string; icon: string }[];
+  skills: Skill[];
 };
 
 export const skills: SkillCategory[] = [
   {
     category: "Languages",
     skills: [
-      { name: "TypeScript", icon: "typescript" },
-      { name: "JavaScript", icon: "javascript" },
-      { name: "Python", icon: "python" },
+      { name: "TypeScript", logo: `${DEVICON}/typescript/typescript-original.svg`, icon: "typescript" },
+      { name: "JavaScript", logo: `${DEVICON}/javascript/javascript-original.svg`, icon: "javascript" },
+      { name: "Python", logo: `${DEVICON}/python/python-original.svg`, icon: "python" },
     ],
   },
   {
     category: "Frontend",
     skills: [
-      { name: "React", icon: "react" },
-      { name: "Next.js", icon: "nextjs" },
-      { name: "React Native", icon: "react" },
-      { name: "Tailwind CSS", icon: "tailwind" },
+      { name: "React", logo: `${DEVICON}/react/react-original.svg`, icon: "react" },
+      { name: "Next.js", logo: `${DEVICON}/nextjs/nextjs-original.svg`, icon: "nextjs" },
+      { name: "React Native", logo: `${DEVICON}/react/react-original.svg`, icon: "react" },
+      { name: "Tailwind CSS", logo: `${DEVICON}/tailwindcss/tailwindcss-original.svg`, icon: "tailwind" },
     ],
   },
   {
     category: "Backend",
     skills: [
-      { name: "Node.js", icon: "nodejs" },
-      { name: "Express", icon: "express" },
-      { name: "FastAPI", icon: "fastapi" },
+      { name: "Node.js", logo: `${DEVICON}/nodejs/nodejs-original.svg`, icon: "nodejs" },
+      { name: "Express", logo: `${DEVICON}/express/express-original.svg`, icon: "express" },
+      { name: "FastAPI", logo: `${DEVICON}/fastapi/fastapi-original.svg`, icon: "fastapi" },
     ],
   },
   {
     category: "AI",
     skills: [
-      { name: "OpenAI API", icon: "openai" },
-      { name: "Python", icon: "python" },
+      { name: "OpenAI API", logo: null, icon: "openai" },
+      { name: "Python", logo: `${DEVICON}/python/python-original.svg`, icon: "python" },
     ],
   },
   {
     category: "Cloud",
     skills: [
-      { name: "Vercel", icon: "vercel" },
-      { name: "Cloudflare", icon: "cloudflare" },
+      { name: "Vercel", logo: `${DEVICON}/vercel/vercel-original.svg`, icon: "vercel" },
+      { name: "Cloudflare", logo: `${DEVICON}/cloudflare/cloudflare-original.svg`, icon: "cloudflare" },
     ],
   },
   {
     category: "Databases",
     skills: [
-      { name: "PostgreSQL", icon: "postgresql" },
-      { name: "Supabase", icon: "supabase" },
+      { name: "PostgreSQL", logo: `${DEVICON}/postgresql/postgresql-original.svg`, icon: "postgresql" },
+      { name: "Supabase", logo: `${DEVICON}/supabase/supabase-original.svg`, icon: "supabase" },
     ],
   },
   {
     category: "Tools",
     skills: [
-      { name: "Git", icon: "git" },
-      { name: "Figma", icon: "figma" },
+      { name: "Git", logo: `${DEVICON}/git/git-original.svg`, icon: "git" },
+      { name: "Figma", logo: `${DEVICON}/figma/figma-original.svg`, icon: "figma" },
     ],
   },
 ];
