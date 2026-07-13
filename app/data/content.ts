@@ -245,38 +245,21 @@ export const projects = [
     demoHref: "https://hcmc-high-school-platform.vercel.app/",
     githubHref: null,
   },
-];
-
-export const achievements = [
   {
-    title: "Top 15 Nationally — Innovation Competition",
-    category: "Award",
-    description:
-      "Ranked Top 15 among 100+ teams nationwide for an accessibility-focused innovation project.",
-  },
-  {
-    title: "Chief Technology Officer, The Noders Community",
-    category: "Leadership",
-    description:
-      "Leading technical direction for an AI & technology community impacting students through events and projects.",
-  },
-  {
-    title: "Co-Founder, Digital Skillset Club",
-    category: "Teaching",
-    description:
-      "Taught programming and cybersecurity fundamentals to students at SOS Children's Village, Ho Chi Minh City.",
-  },
-  {
-    title: "Founder, Doorians Lab & Homee",
-    category: "Entrepreneurship",
-    description:
-      "Founded two ventures: a software studio for educational organizations, and a social platform for student communities.",
-  },
-  {
-    title: "Competitive Programming",
-    category: "Competition",
-    description:
-      "Actively competed in programming contests while building a foundation in algorithms and problem solving.",
+    title: "EWC PUBG Prediction Engine",
+    category: "Data Science / Machine Learning",
+    summary:
+      "Built a machine learning pipeline that predicts team rankings for the EWC 2026 PUBG tournament from historical performance data.",
+    problem:
+      "Esports analysts and fans have no data-driven way to forecast how teams will place at the EWC 2026 PUBG tournament before it starts.",
+    solution:
+      "Built an end-to-end pipeline that pulls team and player stats from Twire (via GraphQL) and rosters from Liquipedia, normalizes player and team names into weighted feature sets, and trains a RandomForest model to predict tournament rankings.",
+    impact:
+      "Outputs team statistics, player metrics, rosters, and predicted rankings as CSVs for the EWC 2026 PUBG tournament.",
+    tech: ["Python", "Jupyter", "RandomForest", "GraphQL"],
+    image: null as string | null,
+    demoHref: null,
+    githubHref: "https://github.com/NTMQuannuaQMTN/ewcpubg",
   },
 ];
 
