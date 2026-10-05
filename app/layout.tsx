@@ -12,7 +12,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Base for relative URLs in metadata (e.g. link preview images like /images/…).
+const siteUrl =
+  process.env.SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL && `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`) ||
+  "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "Nguyễn Trương Mạnh Quân — Software Engineer",
   description:
     "Software Engineer building AI-powered products, beautiful interfaces, and scalable systems.",

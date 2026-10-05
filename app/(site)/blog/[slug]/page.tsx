@@ -10,13 +10,43 @@ import ThemeToggle from "@/app/ui/ThemeToggle";
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** First image in the post body: Markdown ![alt](url) or an <img src="…"> tag. */
+function firstImage(markdown: string) {
+  const match =
+    /!\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+["'][^"']*["'])?\s*\)/.exec(markdown) ??
+    /<img[^>]+src=["']([^"']+)["']/i.exec(markdown);
+  return match?.[1] ?? "";
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await getPublishedBlog((await params).slug);
+  const [post, site] = await Promise.all([getPublishedBlog((await params).slug), getSite()]);
   if (!post) return {};
+
+  // Link preview image: the post's cover, else the first image in the post,
+  // else your profile cover photo, else your profile picture.
+  const wide = post.cover || firstImage(post.content) || site.profile.cover;
+  const image = wide || site.profile.avatar;
+  const images = image ? [{ url: image, alt: post.title }] : [];
+
   return {
     title: post.title,
     description: post.excerpt,
-    openGraph: { title: post.title, description: post.excerpt, images: post.cover ? [post.cover] : [] },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.excerpt,
+      publishedTime: post.publishedAt ?? post.createdAt,
+      modifiedTime: post.updatedAt,
+      authors: [site.profile.name],
+      images,
+    },
+    twitter: {
+      // A square profile picture looks better as a small card than a cropped large one.
+      card: wide ? "summary_large_image" : "summary",
+      title: post.title,
+      description: post.excerpt,
+      images,
+    },
   };
 }
 
