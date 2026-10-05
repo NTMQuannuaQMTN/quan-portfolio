@@ -144,3 +144,16 @@ html {
   padding: 0.5em 0.75em;
   text-align: left;
 }
+
+/* Little "now playing" bars on the hidden music widget icon */
+@keyframes eq {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+.eq-bar {
+  transform-origin: bottom;
+  animation: eq 0.9s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .eq-bar { animation: none; transform: scaleY(0.7); }
+}

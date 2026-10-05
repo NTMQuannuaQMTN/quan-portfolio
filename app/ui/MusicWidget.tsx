@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { ChevronDown, Music, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown, Music } from "lucide-react";
 import { spotifyUri } from "@/lib/spotify";
 import type { MusicEntry } from "@/lib/types";
 
@@ -47,31 +47,19 @@ function loadSpotifyApi() {
 
 type Status = "loading" | "playing" | "paused" | "blocked";
 
-const DISMISS_KEY = "music-widget-dismissed";
-const noopSubscribe = () => () => {};
-
-function readDismissed() {
-  try {
-    return localStorage.getItem(DISMISS_KEY);
-  } catch {
-    return null;
-  }
-}
-
 export default function MusicWidget({ entry }: { entry: MusicEntry }) {
   const embedRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<EmbedController | null>(null);
+  const showButtonRef = useRef<HTMLButtonElement>(null);
+  const hideButtonRef = useRef<HTMLButtonElement>(null);
   const [status, setStatus] = useState<Status>("loading");
-  const [collapsed, setCollapsed] = useState(false);
-  const [closedNow, setClosedNow] = useState(false);
-  // Read localStorage only on the client so server and client markup match.
-  const storedDismissal = useSyncExternalStore(noopSubscribe, readDismissed, () => null);
-  const dismissed = closedNow || storedDismissal === entry.id;
+  // Hidden = shrunk to the music icon. The player stays mounted, so music keeps playing.
+  const [hidden, setHidden] = useState(false);
   const uri = spotifyUri(entry.spotifyUrl);
 
   useEffect(() => {
     const host = embedRef.current;
-    if (!host || !uri || readDismissed() === entry.id) return;
+    if (!host || !uri) return;
 
     let cancelled = false;
     let started = false;
@@ -122,50 +110,56 @@ export default function MusicWidget({ entry }: { entry: MusicEntry }) {
       controllerRef.current = null;
       host.replaceChildren();
     };
-  }, [uri, entry.id]);
+  }, [uri]);
 
-  if (dismissed || !uri) return null;
+  if (!uri) return null;
 
-  function dismiss() {
-    controllerRef.current?.pause();
-    try {
-      localStorage.setItem(DISMISS_KEY, entry.id);
-    } catch {}
-    setClosedNow(true);
+  function hide() {
+    setHidden(true);
+    // Keep keyboard focus on the widget: move it to the icon that brings it back.
+    requestAnimationFrame(() => showButtonRef.current?.focus());
+  }
+
+  function show() {
+    setHidden(false);
+    requestAnimationFrame(() => hideButtonRef.current?.focus());
   }
 
   const playing = status === "playing";
 
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-[calc(100vw-2rem)]">
-      {collapsed && (
+      {hidden && (
         <button
+          ref={showButtonRef}
           type="button"
-          onClick={() => setCollapsed(false)}
-          aria-label={`Music of the day: ${entry.title}. Expand player`}
-          className="relative flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border border-line bg-card shadow-lg ring-2 ring-accent"
+          onClick={show}
+          aria-label={`Show music player: ${entry.title}${entry.artist ? ` by ${entry.artist}` : ""}`}
+          title="My music of the day"
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-accent text-on-accent shadow-lg transition hover:scale-105 hover:bg-accent-hover focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-accent-soft"
         >
-          {entry.coverUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={entry.coverUrl}
-              alt=""
-              className={`h-full w-full object-cover ${playing ? "animate-[spin_8s_linear_infinite]" : ""}`}
-            />
-          ) : (
-            <Music size={20} className="text-accent" />
+          <Music size={22} />
+          {playing && (
+            <span
+              className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-end justify-center gap-[2px] rounded-full border-2 border-card bg-fg px-1 pb-1"
+              aria-hidden="true"
+            >
+              {[0, 0.25, 0.5].map((delay) => (
+                <span key={delay} className="eq-bar h-2.5 w-[2px] rounded-sm bg-card" style={{ animationDelay: `${delay}s` }} />
+              ))}
+            </span>
           )}
         </button>
       )}
 
-      {/* Stays mounted while collapsed so the music keeps playing. */}
+      {/* Stays mounted while hidden so the music keeps playing. */}
       <div
         className={
-          collapsed
+          hidden
             ? "pointer-events-none fixed -left-[9999px] top-0 w-80 opacity-0"
             : "w-[340px] max-w-full overflow-hidden rounded-2xl border border-line bg-card shadow-2xl"
         }
-        aria-hidden={collapsed || undefined}
+        inert={hidden}
       >
         <div className="flex items-center justify-between bg-accent px-3 py-1.5 text-on-accent">
           <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider">
@@ -174,14 +168,16 @@ export default function MusicWidget({ entry }: { entry: MusicEntry }) {
               <span className="ml-1 font-medium normal-case tracking-normal opacity-90">· tap anywhere to play</span>
             )}
           </span>
-          <span className="flex items-center">
-            <button type="button" onClick={() => setCollapsed(true)} aria-label="Minimize player" className="rounded p-1 hover:bg-white/20">
-              <ChevronDown size={14} />
-            </button>
-            <button type="button" onClick={dismiss} aria-label="Close player" className="rounded p-1 hover:bg-white/20">
-              <X size={14} />
-            </button>
-          </span>
+          <button
+            ref={hideButtonRef}
+            type="button"
+            onClick={hide}
+            aria-label="Hide music player"
+            title="Hide"
+            className="rounded p-1 hover:bg-white/20"
+          >
+            <ChevronDown size={14} />
+          </button>
         </div>
         <div ref={embedRef} className="h-20 bg-card [&_iframe]:block" />
       </div>
