@@ -300,6 +300,21 @@ export async function getMusic(limit = 50): Promise<MusicEntry[]> {
   return data.map(toMusic);
 }
 
+/** Songs from the last `days` days (by song date), newest first. */
+export async function getRecentMusic(days: number): Promise<MusicEntry[]> {
+  if (!supabaseConfigured) return [];
+  const since = new Date(Date.now() - days * 86_400_000).toISOString().slice(0, 10);
+  const { data, error } = await dbRead()
+    .from("music")
+    .select("*")
+    .gte("day", since)
+    .order("day", { ascending: false })
+    .order("created_at", { ascending: false })
+    .limit(200);
+  if (error) throw error;
+  return data.map(toMusic);
+}
+
 export async function upsertMusic(entry: Omit<MusicEntry, "id" | "createdAt"> & { id?: string }) {
   const row = {
     day: entry.date,

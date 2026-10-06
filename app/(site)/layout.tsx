@@ -1,16 +1,18 @@
-import { getMusic } from "@/lib/content";
+import { getMusic, getRecentMusic } from "@/lib/content";
 import MusicWidget from "../ui/MusicWidget";
 
 // Content is edited from /admin, so always render with fresh data.
 export const dynamic = "force-dynamic";
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
-  const [today] = await getMusic(1);
+  // A day of slack beyond a month, so visitors ahead of UTC still get a full "Past month".
+  const recent = await getRecentMusic(31);
+  const songs = recent.length > 0 ? recent : await getMusic(1);
 
   return (
     <>
       {children}
-      {today && <MusicWidget key={today.id} entry={today} />}
+      {songs.length > 0 && <MusicWidget songs={songs} serverToday={new Date().toISOString().slice(0, 10)} />}
     </>
   );
 }
